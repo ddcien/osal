@@ -122,7 +122,9 @@
 #define _osapi_filesys_
 #include <stdio.h>
 #include <stdlib.h>
+#if defined(_HAVE_DIRENT_)
 #include <dirent.h>
+#endif
 #include <sys/stat.h>
 
 #define OS_READ_ONLY        0
@@ -235,8 +237,10 @@ typedef struct
  * applicable OSes use the posix calls */
 
 typedef struct stat         os_fstat_t;
+#if defined(_HAVE_DIRENT_)
 typedef DIR*                os_dirp_t;
 typedef struct dirent       os_dirent_t;
+#endif
 /* still don't know what this should be*/
 typedef unsigned long int   os_fshealth_t; 
 
@@ -335,6 +339,7 @@ int32 OS_CloseAllFiles(void);
 int32 OS_CloseFileByName(char *Filename);
 
 
+#if defined(_HAVE_DIRENT_)
 /******************************************************************************
 ** Directory API 
 ******************************************************************************/
@@ -368,7 +373,7 @@ os_dirent_t *   OS_readdir (os_dirp_t directory);
  * Removes an empty directory from the file system.
 */
 int32           OS_rmdir   (const char *path);
-
+#endif
 /******************************************************************************
 ** System Level API 
 ******************************************************************************/
